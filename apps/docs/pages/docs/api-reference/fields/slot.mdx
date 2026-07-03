@@ -231,6 +231,35 @@ const config = {
 };
 ```
 
+Any additional props are forwarded to the element or component provided via `as`, typed against it.
+
+```tsx copy {5}
+const config = {
+  components: {
+    Example: {
+      render: ({ content: Content }) => {
+        return <Content as="details" open />;
+      },
+    },
+  },
+};
+```
+
+The following props are **not** forwarded to the `as` element, because Puck either consumes them internally or they are incompatible with slots:
+
+| Prop                      | Reason                                          |
+| ------------------------- | ----------------------------------------------- |
+| `zone`                    | Identifies the drop zone internally             |
+| `allow`                   | Controls which component types are allowed      |
+| `disallow`                | Controls which component types are disallowed   |
+| `collisionAxis`           | Configures drag collision detection             |
+| `minEmptyHeight`          | Sets the minimum height of an empty zone        |
+| `content`                 | Injected by Puck with the slot's component data |
+| `config`                  | Injected by Puck internally                     |
+| `metadata`                | Injected by Puck internally                     |
+| `dangerouslySetInnerHTML` | Isn't compatible with Puck slots                |
+| `children`                | Isn't compatible with Puck slots                |
+
 ### `className`
 
 Provide a className to the rendered element. The default styles will still be applied.
